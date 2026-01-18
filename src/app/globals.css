@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-inter);
+}
+
 body {
   /* Vibrant, bright, energetic background */
   background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
