@@ -29,12 +29,11 @@ export async function POST(req: Request) {
                     const buffer = Buffer.from(await file.arrayBuffer());
                     const uploadStream = bucket.openUploadStream(file.name, {
                         contentType: file.type,
-                    });
+                    } as any);
                     await new Promise((resolve, reject) => {
-                        uploadStream.end(buffer, (err: any) => {
-                            if (err) reject(err);
-                            else resolve(null);
-                        });
+                        uploadStream.on('finish', () => resolve(null));
+                        uploadStream.on('error', (err) => reject(err));
+                        uploadStream.end(buffer);
                     });
                     media.push({
                         fileId: uploadStream.id.toString(),
@@ -163,12 +162,11 @@ export async function PUT(req: Request) {
                     const buffer = Buffer.from(await file.arrayBuffer());
                     const uploadStream = bucket.openUploadStream(file.name, {
                         contentType: file.type,
-                    });
+                    } as any);
                     await new Promise((resolve, reject) => {
-                        uploadStream.end(buffer, (err: any) => {
-                            if (err) reject(err);
-                            else resolve(null);
-                        });
+                        uploadStream.on('finish', () => resolve(null));
+                        uploadStream.on('error', (err) => reject(err));
+                        uploadStream.end(buffer);
                     });
 
                     // Add new media to the array

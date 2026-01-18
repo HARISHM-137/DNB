@@ -5,12 +5,12 @@ import { ObjectId } from "mongodb";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
 
-    const { id } = params; // ✅ DO NOT await params
+    const { id } = await params; // ✅ Await params for Next.js 15+ compatibility
 
     if (!id) {
       return new NextResponse("Missing ID", { status: 400 });
