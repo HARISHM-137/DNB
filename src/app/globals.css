@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: var(--font-inter);
-}
+
 
 body {
   /* Vibrant, bright, energetic background */
