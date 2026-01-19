@@ -1,7 +1,8 @@
 "use client";
 
 import { Trash2, Download, Edit2 } from "lucide-react";
-import Link from "next/link";
+import Image from "next/image";
+
 
 interface Media {
     fileId: string;
@@ -73,11 +74,14 @@ export default function NoticeCard({ notice, isAdmin, onDelete, onEdit }: Notice
                         {notice.media.map((item) => (
                             <div key={item.fileId} className="border rounded-lg overflow-hidden bg-gray-50">
                                 {item.type === "image" && (
-                                    <img
-                                        src={`/api/media/${item.fileId}`}
-                                        alt={item.filename}
-                                        className="w-full h-auto max-h-96 object-contain"
-                                    />
+                                    <div className="relative w-full h-64 md:h-96">
+                                        <Image
+                                            src={`/api/media/${item.fileId}`}
+                                            alt={item.filename}
+                                            fill
+                                            className="object-contain"
+                                        />
+                                    </div>
                                 )}
                                 {item.type === "video" && (
                                     <video

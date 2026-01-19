@@ -53,20 +53,20 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json(notice);
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error creating notice:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
     try {
         await dbConnect();
         // Public access allows fetching notices
         const notices = await Notice.find().sort({ createdAt: -1 }).populate('createdBy', 'username role'); // Populate creator
         return NextResponse.json(notices);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error) {
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
 }
 
@@ -110,9 +110,9 @@ export async function DELETE(req: Request) {
         await Notice.findByIdAndDelete(id);
 
         return NextResponse.json({ message: 'Notice deleted successfully' });
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error deleting notice:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
 }
 
@@ -138,7 +138,7 @@ export async function PUT(req: Request) {
         const content = formData.get('content') as string;
         const files = formData.getAll('files') as File[];
 
-        const updateData: any = {};
+        const updateData: Record<string, unknown> = {};
         if (title) updateData.title = title;
         if (content) updateData.content = content;
         updateData.updatedBy = session.user.id;
@@ -188,8 +188,8 @@ export async function PUT(req: Request) {
         );
 
         return NextResponse.json(updatedNotice);
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error updating notice:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
 }

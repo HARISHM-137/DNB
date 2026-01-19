@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json({ message: 'User created successfully', user: { username: user.username, role: user.role, status: user.permissionStatus } });
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error) {
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
 }

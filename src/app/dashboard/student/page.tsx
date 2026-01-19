@@ -3,13 +3,30 @@
 import { useState, useEffect } from "react";
 import NoticeCard from "@/components/NoticeCard";
 
+interface Notice {
+    _id: string;
+    title: string;
+    content: string;
+    media: {
+        fileId: string;
+        type: "image" | "video" | "audio";
+        filename: string;
+        contentType: string;
+    }[];
+    updatedAt: string;
+    createdBy: {
+        username: string;
+        role: string;
+    };
+}
+
 export default function StudentDashboard() {
-    const [notices, setNotices] = useState([]);
+    const [notices, setNotices] = useState<Notice[]>([]);
 
     useEffect(() => {
         fetch("/api/notices")
             .then((res) => res.json())
-            .then((data) => setNotices(data))
+            .then((data: Notice[]) => setNotices(data))
             .catch((err) => console.error(err));
     }, []);
 
@@ -19,7 +36,7 @@ export default function StudentDashboard() {
                 <h1 className="text-3xl font-bold text-gray-900 mb-8">Student Notice Board</h1>
 
                 <div className="grid gap-6">
-                    {notices.map((notice: any) => (
+                    {notices.map((notice) => (
                         <NoticeCard key={notice._id} notice={notice} />
                     ))}
                     {notices.length === 0 && (

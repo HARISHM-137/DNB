@@ -48,7 +48,15 @@ export default function LandingPage() {
   );
 }
 
-function OptionCard({ title, href, icon, color, hoverColor }: any) {
+interface OptionCardProps {
+  title: string;
+  href: string;
+  icon: React.ReactNode;
+  color: string;
+  hoverColor: string;
+}
+
+function OptionCard({ title, href, icon, color, hoverColor }: OptionCardProps) {
   return (
     <Link
       href={href}

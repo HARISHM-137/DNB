@@ -4,7 +4,7 @@ import User from '@/models/User';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-export async function GET(req: Request) {
+export async function GET() {
     try {
         const session = await getServerSession(authOptions);
         if (!session || !['hod', 'principal'].includes(session.user.role)) {
@@ -14,8 +14,8 @@ export async function GET(req: Request) {
         await dbConnect();
         const users = await User.find({}, '-password').sort({ createdAt: -1 });
         return NextResponse.json(users);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error) {
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
 }
 
@@ -37,7 +37,7 @@ export async function PUT(req: Request) {
         ).select('-password');
 
         return NextResponse.json(updatedUser);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error) {
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
 }

@@ -30,10 +30,11 @@ export async function GET(
       return new NextResponse("File not found", { status: 404 });
     }
 
-    const file = files[0] as any;
+    const file = files[0] as unknown as { contentType?: string; length: number };
     const stream = bucket.openDownloadStream(_id);
 
-    return new NextResponse(stream as any, {
+    // Cast node stream to web stream compatible type for Next.js response
+    return new NextResponse(stream as unknown as BodyInit, {
       headers: {
         "Content-Type": file.contentType || "application/octet-stream",
         "Content-Length": file.length.toString()

@@ -5,21 +5,28 @@ import AdminDashboard from "../admin/page";
 import { Users, ShieldCheck, ShieldAlert } from "lucide-react";
 
 export default function HODDashboard() {
-    const [activeTab, setActiveTab] = useState<'notices' | 'users'>('notices');
-    const [users, setUsers] = useState([]);
+    interface User {
+        _id: string;
+        username: string;
+        role: string;
+        permissionStatus: string;
+    }
 
-    const fetchUsers = async () => {
-        const res = await fetch("/api/users");
-        if (res.ok) {
-            setUsers(await res.json());
-        }
-    };
+    const [activeTab, setActiveTab] = useState<'notices' | 'users'>('notices');
+    const [users, setUsers] = useState<User[]>([]);
+    const [reloadTrigger, setReloadTrigger] = useState(0);
 
     useEffect(() => {
         if (activeTab === 'users') {
+            const fetchUsers = async () => {
+                const res = await fetch("/api/users");
+                if (res.ok) {
+                    setUsers(await res.json());
+                }
+            };
             fetchUsers();
         }
-    }, [activeTab]);
+    }, [activeTab, reloadTrigger]);
 
     const updateRole = async (userId: string, newRole: string) => {
         const res = await fetch("/api/users", {
@@ -28,7 +35,7 @@ export default function HODDashboard() {
             body: JSON.stringify({ userId, role: newRole, permissionStatus: newRole === 'admin' || newRole === 'hod' ? 'approved' : 'none' }),
         });
         if (res.ok) {
-            fetchUsers();
+            setReloadTrigger(prev => prev + 1);
         }
     };
 
@@ -68,7 +75,7 @@ export default function HODDashboard() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
-                                {users.map((user: any) => (
+                                {users.map((user) => (
                                     <tr key={user._id} className="hover:bg-gray-50/50">
                                         <td className="px-6 py-4 font-medium text-gray-900">{user.username}</td>
                                         <td className="px-6 py-4">

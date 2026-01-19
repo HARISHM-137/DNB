@@ -8,13 +8,13 @@ interface Notice {
     _id: string;
     title: string;
     content: string;
-    media: any[];
+    media: { fileId: string; type: "image" | "video" | "audio"; filename: string; contentType: string }[];
     updatedAt: string;
-    createdBy: any;
+    createdBy: { username: string; role: string };
 }
 
 // Reuse this type or import if centralized
-interface NoticeType extends Notice { }
+type NoticeType = Notice;
 
 export default function AdminDashboard({ pageTitle = "Admin Dashboard" }: { pageTitle?: string }) {
     const [notices, setNotices] = useState<Notice[]>([]);
