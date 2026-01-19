@@ -5,12 +5,13 @@ import { ObjectId } from "mongodb";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
   try {
     await dbConnect();
 
-    const { id } = params; // ✅ Reverted to synchronous destructuring for Next.js 14
+    const params = await props.params;
+    const { id } = params;
 
     if (!id) {
       return new NextResponse("Missing ID", { status: 400 });
