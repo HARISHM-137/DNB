@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import mongoose from "mongoose";
-import { ObjectId } from "mongodb";
+// import { ObjectId } from "mongodb"; // Removed direct import
 
 export async function GET(
   request: Request,
@@ -23,7 +23,7 @@ export async function GET(
     }
 
     const bucket = new mongoose.mongo.GridFSBucket(db);
-    const _id = new ObjectId(id);
+    const _id = new mongoose.Types.ObjectId(id);
 
     const files = await bucket.find({ _id }).toArray();
     if (files.length === 0) {

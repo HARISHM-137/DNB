@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import AdminDashboard from "../admin/page";
+import DashboardClient from "@/components/DashboardClient";
 import { Users, ShieldCheck, ShieldAlert } from "lucide-react";
 
 export default function HODDashboard() {
@@ -60,7 +60,7 @@ export default function HODDashboard() {
             </div>
 
             {activeTab === 'notices' ? (
-                <AdminDashboard pageTitle="HOD Dashboard" />
+                <DashboardClient pageTitle="HOD Dashboard" />
             ) : (
                 <div className="p-8 max-w-7xl mx-auto">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6">User Permissions</h2>
