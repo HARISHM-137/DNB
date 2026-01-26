@@ -1,11 +1,20 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { LogOut, User } from "lucide-react";
 
 export default function Navbar() {
     const { data: session } = useSession();
+
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null; // or a generic skeleton
 
     return (
         <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm border-b border-gray-100">

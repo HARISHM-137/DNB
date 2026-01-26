@@ -14,6 +14,8 @@ const UserSchema = new mongoose.Schema({
         default: 'none',
     },
     createdAt: { type: Date, default: Date.now },
+    otp: { type: String },
+    otpExpires: { type: Date },
 });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);
