@@ -3,6 +3,7 @@
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ShieldCheck, Smartphone, CheckCircle, ArrowRight } from "lucide-react";
+import Loader from "@/components/Loader";
 
 function VerifyContent() {
     const router = useRouter();
@@ -120,9 +121,13 @@ function VerifyContent() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 disabled:opacity-70 flex items-center justify-center gap-2"
+                            className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/30 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 relative overflow-hidden group"
                         >
-                            {loading ? "Verifying..." : <>Request OTP <ArrowRight size={18} /></>}
+                            {loading && <Loader className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />}
+                            <span className={`flex items-center gap-2 ${loading ? "opacity-0" : "opacity-100"}`}>
+                                Request OTP <ArrowRight size={18} />
+                            </span>
+                            {!loading && <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-lg" />}
                         </button>
                     </form>
                 ) : (
@@ -145,9 +150,11 @@ function VerifyContent() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20 disabled:opacity-70"
+                            className="w-full bg-green-600 text-white py-3 rounded-lg font-bold text-lg hover:bg-green-700 transition-all shadow-lg shadow-green-600/30 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 relative overflow-hidden group"
                         >
-                            {loading ? "Checking..." : "Verify & Approve"}
+                            {loading && <Loader className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />}
+                            <span className={loading ? "opacity-0" : "opacity-100"}>Verify & Approve</span>
+                            {!loading && <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-lg" />}
                         </button>
                         <button
                             type="button"

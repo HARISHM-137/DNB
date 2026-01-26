@@ -5,16 +5,21 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Lock, User, Eye, EyeOff } from "lucide-react";
+import Loader from "@/components/Loader";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
+        setError("");
+
         const res = await signIn("credentials", {
             username,
             password,
@@ -23,9 +28,11 @@ export default function LoginPage() {
 
         if (res?.error) {
             setError(res.error || "Login failed");
+            setLoading(false);
         } else {
-            router.push("/dashboard"); // Redirect to home/dashboard logic will happen there or in middleware
+            router.push("/dashboard");
             router.refresh();
+            // Keep loading true while redirecting for smoother UX
         }
     };
 
@@ -81,9 +88,12 @@ export default function LoginPage() {
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20"
+                        disabled={loading}
+                        className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/30 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 relative overflow-hidden group"
                     >
-                        Sign In
+                        {loading && <Loader className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />}
+                        <span className={loading ? "opacity-0" : "opacity-100"}>Sign In</span>
+                        {!loading && <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-lg" />}
                     </button>
                 </form>
                 <div className="mt-6 text-center text-sm text-gray-500">

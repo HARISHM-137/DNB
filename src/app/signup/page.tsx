@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { User, Lock, Shield, Eye, EyeOff } from "lucide-react";
+import Loader from "@/components/Loader";
 
 export default function SignupPage() {
     const [username, setUsername] = useState("");
@@ -131,9 +132,11 @@ export default function SignupPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20 disabled:opacity-50"
+                        className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/30 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 relative overflow-hidden group"
                     >
-                        {loading ? "Creating Account..." : "Sign Up"}
+                        {loading && <Loader className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />}
+                        <span className={loading ? "opacity-0" : "opacity-100"}>Sign Up</span>
+                        {!loading && <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-lg" />}
                     </button>
                 </form>
                 <div className="mt-6 text-center text-sm text-gray-500">
