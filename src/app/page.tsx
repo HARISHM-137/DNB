@@ -13,8 +13,8 @@ export default function LandingPage() {
           <h1 className="text-5xl md:text-7xl font-black text-white drop-shadow-lg tracking-tight">
             DIGITAL NOTICE BOARD
           </h1>
-          <p className="text-xl text-white/90 font-medium max-w-2xl mx-auto">
-            Select your portal to continue
+          <p className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-pink-200 to-white drop-shadow-sm max-w-3xl mx-auto uppercase tracking-wide">
+            The Future of Information Starts Here
           </p>
         </div>
 

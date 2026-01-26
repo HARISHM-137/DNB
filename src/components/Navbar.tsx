@@ -23,7 +23,7 @@ export default function Navbar() {
                     <Link href="/">Digital Notice Board</Link>
                 </h1>
                 <div className="flex gap-4 items-center">
-                    {session ? (
+                    {session && (
                         <>
                             <div className="flex items-center gap-2 text-sm font-medium text-gray-700 bg-gray-100 px-3 py-1.5 rounded-full">
                                 <User size={16} className="text-blue-500" />
@@ -36,13 +36,6 @@ export default function Navbar() {
                                 <LogOut size={16} /> Logout
                             </button>
                         </>
-                    ) : (
-                        <Link
-                            href="/login"
-                            className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-600/20 font-medium"
-                        >
-                            Login
-                        </Link>
                     )}
                 </div>
             </div>
