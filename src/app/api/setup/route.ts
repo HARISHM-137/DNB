@@ -5,7 +5,7 @@ import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import bcrypt from 'bcryptjs';
 
-export async function GET() {
+export async function POST() {
     await dbConnect();
 
     const existingAdmin = await User.findOne({ username: 'admin' });
