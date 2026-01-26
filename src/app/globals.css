@@ -11,6 +11,14 @@ body {
   animation: gradientBG 15s ease infinite;
   color: #1f2937;
   min-height: 100vh;
+
+  /* Font & Clarity Enhancements */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01";
+  letter-spacing: -0.015em;
+  /* Slightly tighter for modern bold look */
 }
 
 @keyframes gradientBG {
