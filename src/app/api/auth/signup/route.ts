@@ -6,15 +6,18 @@ import bcrypt from 'bcryptjs';
 export async function POST(req: Request) {
     try {
         await dbConnect();
-        const { username, password, role } = await req.json();
+        const { username, password, role, phoneNumber } = await req.json();
 
-        if (!username || !password || !role) {
+        if (!username || !password || !role || !phoneNumber) {
             return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
         }
 
-        const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({
+            $or: [{ username }, { phoneNumber }]
+        });
+
         if (existingUser) {
-            return NextResponse.json({ error: 'Username already exists' }, { status: 400 });
+            return NextResponse.json({ error: 'Username or Phone Number already exists' }, { status: 400 });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -26,6 +29,7 @@ export async function POST(req: Request) {
 
         const user = await User.create({
             username,
+            phoneNumber,
             password: hashedPassword,
             role,
             permissionStatus,

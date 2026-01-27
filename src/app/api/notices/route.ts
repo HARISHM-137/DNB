@@ -37,7 +37,9 @@ export async function POST(req: Request) {
                     });
                     media.push({
                         fileId: uploadStream.id.toString(),
-                        type: file.type.startsWith('image/') ? 'image' : file.type.startsWith('video/') ? 'video' : 'audio',
+                        type: file.type.startsWith('image/') ? 'image' :
+                            file.type.startsWith('video/') ? 'video' :
+                                file.type.startsWith('audio/') ? 'audio' : 'document',
                         filename: file.name,
                         contentType: file.type,
                     });
@@ -172,7 +174,9 @@ export async function PUT(req: Request) {
                     // Add new media to the array
                     notice.media.push({
                         fileId: uploadStream.id.toString(),
-                        type: file.type.startsWith('image/') ? 'image' : file.type.startsWith('video/') ? 'video' : 'audio',
+                        type: file.type.startsWith('image/') ? 'image' :
+                            file.type.startsWith('video/') ? 'video' :
+                                file.type.startsWith('audio/') ? 'audio' : 'document',
                         filename: file.name,
                         contentType: file.type,
                     });

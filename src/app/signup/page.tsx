@@ -8,6 +8,7 @@ import Loader from "@/components/Loader";
 
 export default function SignupPage() {
     const [username, setUsername] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState(""); // Added phone number state
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [role, setRole] = useState("admin");
@@ -26,7 +27,7 @@ export default function SignupPage() {
             const res = await fetch("/api/auth/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password, role }),
+                body: JSON.stringify({ username, password, role, phoneNumber }),
             });
 
             const data = await res.json();
@@ -88,6 +89,23 @@ export default function SignupPage() {
                                 onChange={(e) => setUsername(e.target.value)}
                                 className="w-full pl-10 pr-4 py-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none bg-blue-50/30 text-gray-900 font-medium"
                                 placeholder="Choose a username"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                        <div className="relative">
+                            <span className="absolute left-3 top-2.5 text-gray-500 text-sm font-medium">+91</span>
+                            <input
+                                type="tel"
+                                value={phoneNumber}
+                                onChange={(e) => {
+                                    const val = e.target.value.replace(/\D/g, '');
+                                    if (val.length <= 10) setPhoneNumber(val);
+                                }}
+                                className="w-full pl-10 pr-4 py-2 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none bg-blue-50/30 text-gray-900 font-medium"
+                                placeholder="9876543210"
                                 required
                             />
                         </div>

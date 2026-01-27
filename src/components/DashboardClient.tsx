@@ -8,7 +8,7 @@ interface Notice {
     _id: string;
     title: string;
     content: string;
-    media: { fileId: string; type: "image" | "video" | "audio"; filename: string; contentType: string }[];
+    media: { fileId: string; type: string; filename: string; contentType: string }[];
     updatedAt: string;
     createdBy: { username: string; role: string };
 }
@@ -191,10 +191,10 @@ export default function DashboardClient({ pageTitle = "Dashboard" }: DashboardCl
                                     type="file"
                                     multiple
                                     onChange={(e) => setFiles(e.target.files)}
-                                    accept="image/*,video/*,audio/*"
+                                    // Removed accept restriction to allow all document types
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
                                 />
-                                <p className="text-xs text-gray-500 mt-1">Supported formats: JPG, PNG, MP4, MP3, etc.</p>
+                                <p className="text-xs text-gray-500 mt-1">Supported formats: Images, Videos, Audio, PDFs, Docs, etc.</p>
                             </div>
                             <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
                                 <button

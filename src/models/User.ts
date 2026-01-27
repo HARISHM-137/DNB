@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     otp: { type: String },
     otpExpires: { type: Date },
+    phoneNumber: { type: String, required: true }, // Added phone number
 });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

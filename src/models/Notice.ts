@@ -6,7 +6,7 @@ const NoticeSchema = new mongoose.Schema({
     media: [
         {
             fileId: { type: String, required: true },
-            type: { type: String, enum: ['image', 'video', 'audio'], required: true },
+            type: { type: String, required: true }, // Removed strict enum to allow all file types
             filename: { type: String, required: true },
             contentType: { type: String },
         },

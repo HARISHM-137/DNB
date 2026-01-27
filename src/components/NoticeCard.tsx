@@ -6,7 +6,7 @@ import Image from "next/image";
 
 interface Media {
     fileId: string;
-    type: "image" | "video" | "audio";
+    type: string; // "image" | "video" | "audio" | "document" etc.
     filename: string;
     contentType: string;
 }
@@ -96,6 +96,14 @@ export default function NoticeCard({ notice, isAdmin, onDelete, onEdit }: Notice
                                         controls
                                         className="w-full p-2"
                                     />
+                                )}
+                                {(!["image", "video", "audio"].includes(item.type)) && (
+                                    <div className="flex flex-col items-center justify-center h-32 bg-gray-50 p-4 text-gray-500">
+                                        <div className="bg-white p-3 rounded-full shadow-sm mb-2">
+                                            <Download size={24} className="text-blue-500" />
+                                        </div>
+                                        <span className="text-sm font-medium">Document Attachment</span>
+                                    </div>
                                 )}
                                 <div className="p-2 bg-gray-100 flex justify-between items-center text-xs text-gray-600">
                                     <span className="truncate max-w-[200px]">{item.filename}</span>
