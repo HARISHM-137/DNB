@@ -4,6 +4,12 @@ export async function sendSMS(to: string, message: string) {
     const start = Date.now();
     const apiKey = process.env.FAST2SMS_API_KEY;
 
+    // DEBUG: Always log SMS to console for development verification
+    console.log("------------------------------------------");
+    console.log(`📨 [SMS DEBUG] To: ${to}`);
+    console.log(`💬 [SMS DEBUG] Message: ${message}`);
+    console.log("------------------------------------------");
+
     // Fast2SMS requires numbers without country code for basic "Quick SMS" usually,
     // or with country code. For safety, we usually strip +91 for Fast2SMS generic routes 
     // BUT their specific documentation varies. 

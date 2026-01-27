@@ -209,7 +209,12 @@ export default function DashboardClient({ pageTitle = "Dashboard" }: DashboardCl
                                     disabled={loading}
                                     className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50 font-medium shadow-md"
                                 >
-                                    {loading ? (editingNotice ? "Updating..." : "Publishing...") : (editingNotice ? "Update Notice" : "Publish Notice")}
+                                    {loading ? (
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                            <span>{editingNotice ? "Updating & Uploading..." : "Publishing..."}</span>
+                                        </div>
+                                    ) : (editingNotice ? "Update Notice" : "Publish Notice")}
                                 </button>
                             </div>
                         </form>
