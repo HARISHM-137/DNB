@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { User, Lock, Shield, Eye, EyeOff } from "lucide-react";
-import Loader from "@/components/Loader";
+import Loader from "../../components/Loader";
 
 export default function SignupPage() {
     const [username, setUsername] = useState("");

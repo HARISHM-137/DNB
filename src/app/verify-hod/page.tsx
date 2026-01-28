@@ -3,7 +3,7 @@
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ShieldCheck, Smartphone, CheckCircle, ArrowRight } from "lucide-react";
-import Loader from "@/components/Loader";
+import Loader from "../../components/Loader";
 
 function VerifyContent() {
     const router = useRouter();
