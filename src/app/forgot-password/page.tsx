@@ -154,10 +154,15 @@ export default function ForgotPasswordPage() {
                             disabled={loading}
                             className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/30 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 relative overflow-hidden"
                         >
-                            {loading && <Loader className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />}
+
                             <span className={loading ? "opacity-0" : "opacity-100 flex items-center gap-2"}>
                                 Send OTP <ArrowRight size={20} />
                             </span>
+                            {loading && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <Loader />
+                                </div>
+                            )}
                         </button>
                     </form>
                 )}
@@ -183,9 +188,14 @@ export default function ForgotPasswordPage() {
                             disabled={loading}
                             className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/30 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 relative overflow-hidden"
                         >
-                            <span className="opacity-100 flex items-center gap-2">
+                            <span className={loading ? "opacity-0" : "opacity-100 flex items-center gap-2"}>
                                 Verify OTP <ArrowRight size={20} />
                             </span>
+                            {loading && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <Loader />
+                                </div>
+                            )}
                         </button>
                     </form>
                 )}
@@ -226,8 +236,13 @@ export default function ForgotPasswordPage() {
                             disabled={loading}
                             className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/30 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 relative overflow-hidden"
                         >
-                            {loading && <Loader className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />}
+
                             <span className={loading ? "opacity-0" : "opacity-100"}>Update Password</span>
+                            {loading && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <Loader />
+                                </div>
+                            )}
                         </button>
                     </form>
                 )}

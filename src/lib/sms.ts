@@ -10,13 +10,9 @@ export async function sendSMS(to: string, message: string) {
     console.log(`💬 [SMS DEBUG] Message: ${message}`);
     console.log("------------------------------------------");
 
-    // Fast2SMS requires numbers without country code for basic "Quick SMS" usually,
-    // or with country code. For safety, we usually strip +91 for Fast2SMS generic routes 
-    // BUT their specific documentation varies. 
-    // Standard Bulk JSON API often takes numbers as string.
-    // Let's assume input 'to' is like "+917904311829" -> we keep it or strip based on trial.
     // Fast2SMS usually expects 10 digit number for their free route.
-    const cleanNumber = to.replace('+91', '').trim();
+    // Robust cleaning: remove non-digits, then take last 10 chars
+    const cleanNumber = to.replace(/\D/g, '').slice(-10);
 
     if (!apiKey) {
         console.log("------------------------------------------");

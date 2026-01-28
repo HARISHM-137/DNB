@@ -48,9 +48,12 @@ export default function DashboardClient({ pageTitle = "Dashboard" }: DashboardCl
         fetchNotices();
     }, []);
 
+    const [uploadProgress, setUploadProgress] = useState(0);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+        setUploadProgress(0);
 
         const formData = new FormData();
         formData.append("title", title);
@@ -61,29 +64,46 @@ export default function DashboardClient({ pageTitle = "Dashboard" }: DashboardCl
             });
         }
 
-        try {
-            const url = editingNotice ? `/api/notices?id=${editingNotice._id}` : "/api/notices";
-            const method = editingNotice ? "PUT" : "POST";
+        const url = editingNotice ? `/api/notices?id=${editingNotice._id}` : "/api/notices";
+        const method = editingNotice ? "PUT" : "POST";
 
-            const res = await fetch(url, {
-                method: method,
-                body: formData,
+        try {
+            await new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open(method, url);
+
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percentComplete = Math.round((event.loaded / event.total) * 100);
+                        setUploadProgress(percentComplete);
+                    }
+                };
+
+                xhr.onload = async () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(xhr.response);
+                    } else {
+                        reject(new Error("Failed to upload"));
+                    }
+                };
+
+                xhr.onerror = () => reject(new Error("Network error"));
+
+                xhr.send(formData);
             });
 
-            if (res.ok) {
-                setIsModalOpen(false);
-                setTitle("");
-                setContent("");
-                setFiles(null);
-                fetchNotices();
-            } else {
-                alert("Failed to create notice");
-            }
+            setIsModalOpen(false);
+            setTitle("");
+            setContent("");
+            setFiles(null);
+            setUploadProgress(0);
+            fetchNotices();
         } catch (error) {
             console.error(error);
             alert("Error creating notice");
         } finally {
             setLoading(false);
+            setUploadProgress(0);
         }
     };
 
@@ -211,13 +231,30 @@ export default function DashboardClient({ pageTitle = "Dashboard" }: DashboardCl
                                 >
                                     {loading ? (
                                         <div className="flex items-center gap-2">
-                                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                            <span>{editingNotice ? "Updating & Uploading..." : "Publishing..."}</span>
+                                            {uploadProgress > 0 && uploadProgress < 100 ? (
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                    <span>Uploading {uploadProgress}%</span>
+                                                </div>
+                                            ) : (
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                                    <span>Processing...</span>
+                                                </div>
+                                            )}
                                         </div>
                                     ) : (editingNotice ? "Update Notice" : "Publish Notice")}
                                 </button>
                             </div>
                         </form>
+                        {loading && uploadProgress > 0 && (
+                            <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-100">
+                                <div
+                                    className="h-full bg-blue-500 transition-all duration-300 ease-out"
+                                    style={{ width: `${uploadProgress}%` }}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
