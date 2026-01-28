@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { User, Lock, ArrowRight, CheckCircle, ShieldCheck } from "lucide-react";
-import Loader from "@/components/Loader";
+import Loader from "../../components/Loader";
 
 export default function ForgotPasswordPage() {
     const [step, setStep] = useState<1 | 2 | 3>(1);

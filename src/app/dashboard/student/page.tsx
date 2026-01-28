@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import NoticeCard from "@/components/NoticeCard";
+import NoticeCard from "../../../components/NoticeCard";
 
 interface Notice {
     _id: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import DashboardClient from "@/components/DashboardClient";
+import DashboardClient from "../../../components/DashboardClient";
 import { Users, ShieldCheck, ShieldAlert } from "lucide-react";
 
 export default function HODDashboard() {
