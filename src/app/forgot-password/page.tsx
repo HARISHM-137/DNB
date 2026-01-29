@@ -35,6 +35,9 @@ export default function ForgotPasswordPage() {
 
             if (res.ok) {
                 setStep(2);
+                if (data.debug_otp) {
+                    alert(`DEMO MODE OTP: ${data.debug_otp}`);
+                }
             } else {
                 setError(data.error || "Failed to send OTP");
             }

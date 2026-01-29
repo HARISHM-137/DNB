@@ -48,9 +48,14 @@ export async function POST(req: Request) {
 
         const message = `DNB Password Reset OTP: ${otp}. Do not share this with anyone.`;
 
-        await sendSMS(formattedNumber, message);
+        const smsResult = await sendSMS(formattedNumber, message);
 
-        return NextResponse.json({ message: 'OTP sent successfully', phoneNumber: user.phoneNumber });
+        // MOCK MODE: Return OTP in response so frontend can show it
+        return NextResponse.json({
+            message: 'OTP sent successfully',
+            phoneNumber: user.phoneNumber,
+            debug_otp: smsResult.debug_otp // Frontend will show this in Alert
+        });
 
     } catch (error) {
         console.error("OTP Send Error:", error);

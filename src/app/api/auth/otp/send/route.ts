@@ -37,9 +37,13 @@ export async function POST(req: Request) {
         const targetNumber = "+91" + HOD_ADMIN_NUMBER;
         const message = `DNB Verification Code: ${otp} for HOD Application (User: ${username})`;
 
-        await sendSMS(targetNumber, message);
+        const smsResult = await sendSMS(targetNumber, message);
 
-        return NextResponse.json({ message: 'OTP sent successfully' });
+        // MOCK MODE: Return OTP in response so frontend can show it
+        return NextResponse.json({
+            message: 'OTP sent successfully',
+            debug_otp: smsResult.debug_otp // Frontend will show this in Alert
+        });
 
     } catch (error) {
         console.error("OTP Send Error:", error);

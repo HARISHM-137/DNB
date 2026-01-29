@@ -37,7 +37,10 @@ function VerifyContent() {
 
             if (res.ok) {
                 setStep("otp");
-                setSuccess("OTP sent successfully to the registered admin number.");
+                setSuccess("OTP sent! Check your screen.");
+                if (data.debug_otp) {
+                    alert(`DEMO MODE OTP: ${data.debug_otp}`);
+                }
             } else {
                 setError(data.error || "Failed to send OTP");
             }
