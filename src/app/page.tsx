@@ -9,11 +9,11 @@ export default function LandingPage() {
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center gap-16">
 
         {/* Header */}
-        <div className="text-center space-y-4 px-4 w-full">
-          <h1 className="text-4xl md:text-7xl font-black text-white drop-shadow-lg tracking-tight break-words">
+        <div className="text-center space-y-4 px-4 w-full animate-fade-in-up">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white drop-shadow-lg tracking-tight break-words animate-bounce-slow">
             DIGITAL NOTICE BOARD
           </h1>
-          <p className="text-lg md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-pink-200 to-white drop-shadow-sm max-w-3xl mx-auto uppercase tracking-wide">
+          <p className="text-lg md:text-2xl lg:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-pink-200 to-white drop-shadow-sm max-w-3xl mx-auto uppercase tracking-wide">
             The Future of Information Starts Here
           </p>
         </div>
