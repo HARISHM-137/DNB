@@ -10,7 +10,7 @@ export async function POST(req: Request) {
         const { identifier } = await req.json(); // Can be username or phoneNumber
 
         if (!identifier) {
-            return NextResponse.json({ error: 'Please enter your username or phone number' }, { status: 400 });
+            return NextResponse.json({ error: 'Please enter your phone number' }, { status: 400 });
         }
 
         // Find User
